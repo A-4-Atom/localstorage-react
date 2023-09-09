@@ -1,35 +1,29 @@
-name: Publish
+name: Node.js Release Workflow
+
 on:
   push:
     branches:
       - main
 
-concurrency: ${{ github.workflow }}-${{ github.ref }}
-
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '16.x'
-          cache: "npm"
+          node-version: 14  # You can specify the version you need
 
-      - name: Install Dependencies
+      - name: Install dependencies using npm ci
         run: npm ci
 
       - name: Authenticate with npm
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-
-      - name: Create Release Pull Request or Publish
-        id: changesets
         run: |
-          npm run release
+          echo "//registry.npmjs.org/:_authToken=\${{ secrets.NPM_TOKEN }}" > ~/.npmrc
 
-        env:
-          GITHUB_TOKEN: ${{ secrets.CI_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Run npm run release
+        run: npm run release
