@@ -21,9 +21,12 @@ jobs:
       - name: Install dependencies using npm ci
         run: npm ci
 
+      - name: Install changesets (if not already installed)
+        run: npm install --save-dev @changesets/cli
+
       - name: Authenticate with npm
         run: |
-          echo "//registry.npmjs.org/:_authToken=\${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+          echo "//registry.npmjs.org/:_authToken=\${{ secrets.NPM_AUTH_TOKEN }}" > ~/.npmrc
 
       - name: Run npm run release
         run: npm run release
