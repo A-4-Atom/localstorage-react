@@ -6,21 +6,21 @@ localstorage-react is a simple and lightweight npm package that allows you to us
 
 You can install localstorage-react using npm or yarn:
 
-\`\`\`bash
+```bash
 npm install localstorage-react
-\`\`\`
+```
 
 or
 
-\`\`\`bash
+```bash
 yarn add localstorage-react
-\`\`\`
+```
 
 ## Usage
 
 To get started, import the \`useLocalStorage\` hook from \`localstorage-react\` and use it in your components:
 
-\`\`\`javascript
+```javascript
 import React from 'react';
 import  useLocalStorage  from 'localstorage-react';
 
@@ -49,7 +49,7 @@ function MyComponent() {
 }
 
 export default MyComponent;
-\`\`\`
+```
 
 ### Notes:
 
