@@ -1,12 +1,19 @@
 {
   "name": "localstorage-react",
   "license": "MIT",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "description": "The useLocalStorage hook provides a convenient way to synchronize the state of a component with the data stored in local storage. It automatically reads the initial value from local storage when the component mounts and updates the local storage whenever the state changes.",
-  "keywords": [ "react", "hook", "localstorage", "state", "storage", "useLocalStorage" ],
+  "keywords": [
+    "react",
+    "hook",
+    "localstorage",
+    "state",
+    "storage",
+    "useLocalStorage"
+  ],
   "repository": "A-4-Atom/localstorage-react",
   "author": "Vikas Chauhan",
   "scripts": {
