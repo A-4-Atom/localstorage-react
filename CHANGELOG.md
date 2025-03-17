@@ -1,5 +1,12 @@
 # localstorage-react
 
+## 1.0.0
+
+### Major Changes
+
+- d8aa364: Simplified Code and logic, hook now supports passing callback function as argument.
+  No changes to existing code needed.
+
 ## 0.0.8
 
 ### Patch Changes
