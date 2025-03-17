@@ -1,35 +1,40 @@
-import { useEffect, useState, useCallback, useDebugValue } from "react";
+import { useEffect, useState, useDebugValue } from "react";
 
 
-type UseLocalStorageHook<T> = [T, (value: T) => void];
+type UseLocalStorageHook<T> = [T, (value: T | ((prev: T) => T)) => void];
 
-function useLocalStorage<T>(
-  key: string,
-  initialValue: T = "" as T
-): UseLocalStorageHook<T> {
+function useLocalStorage<T>(key: string, initialValue: T): UseLocalStorageHook<T> {
   const [value, setValue] = useState<T>(() => {
-    const existingValue = localStorage.getItem(key);
-    return existingValue ? JSON.parse(existingValue) : initialValue;
-  });
-
-  const setValueCallback = useCallback(
-   (newValue: T) => {
-      setValue(newValue);
-    },
-    [setValue]
-  );
+    try{
+      const existingValue = localStorage.getItem(key);
+      return existingValue ? JSON.parse(existingValue) : initialValue;
+    }catch(error){
+      console.error("Error reading localStorage item", error)
+      return initialValue;
+    }
+  })
 
   useEffect(() => {
-    try {
-      localStorage.setItem(key, JSON.stringify(value));
-    } catch (error) {
-      console.log(error)
+    try{
+      const existingValue = localStorage.getItem(key);
+        setValue(existingValue ? JSON.parse(existingValue) : initialValue);
+    }catch(error){
+      console.error("Error reading localStorage item", error)
+      setValue(initialValue);
     }
-  }, [key, value]);
+  }, [key, initialValue])
 
-  useDebugValue(value ?? 'loading...')
+  useEffect(() => {
+    try{
+      localStorage.setItem(key, JSON.stringify(value));
+    }catch(error){
+      console.error("Error writing to localStorage", error)
+    }
+  }, [key, value])
 
-  return [value, setValueCallback];
+  useDebugValue(`${key}: ${JSON.stringify(value)}`);
+
+  return [value, setValue];
 }
 
 export default useLocalStorage;
